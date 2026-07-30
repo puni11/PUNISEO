@@ -2,7 +2,12 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./db";
-
+console.log({
+  GOOGLE_CLIENT_ID: !!process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: !!process.env.GOOGLE_CLIENT_SECRET,
+  NEXTAUTH_SECRET: !!process.env.NEXTAUTH_SECRET,
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+});
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("Missing Google OAuth credentials");
 }
