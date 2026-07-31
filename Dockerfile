@@ -10,6 +10,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+
+# ---> ADD THIS LINE HERE <---
+# This tells Next.js/T3 Env to skip validating secrets during the Docker build
+ENV SKIP_ENV_VALIDATION=1
+
 RUN npm run build
 
 FROM base AS runner
@@ -25,4 +30,5 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
+# The migrate deploy will run perfectly here because Render injects the DATABASE_URL at runtime!
 CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
