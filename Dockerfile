@@ -14,7 +14,10 @@ RUN npx prisma generate
 # ---> ADD THIS LINE HERE <---
 # This tells Next.js/T3 Env to skip validating secrets during the Docker build
 ENV SKIP_ENV_VALIDATION=1
-
+ENV GOOGLE_CLIENT_ID=dummy_id
+ENV GOOGLE_CLIENT_SECRET=dummy_secret
+ENV NEXTAUTH_SECRET=dummy_secret
+ENV NEXTAUTH_URL=http://localhost:3000
 RUN npm run build
 
 FROM base AS runner
